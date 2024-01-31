@@ -23,13 +23,13 @@ const getCourseById = async (id) => {
 };
 
 // Many-to-many example
-const getStudentCourse = async (id) => {
+const getCourseMember = async (id) => {
   const poolConnection = await db.ConnectionPool.getConnection();
-  await poolConnection.query(
+  const query = await poolConnection.query(
     `SELECT student.*
     FROM student
-    JOIN course_student ON student.id = course_student.student_id
-    JOIN course ON course_student.course_id = course.id
+    JOIN student_course ON student.id = student_course.student_id
+    JOIN course ON student_course.course_id = course.id
     WHERE course.id = '${id}';`
   );
 
@@ -76,7 +76,7 @@ module.exports = {
   addCourse,
   getAllCourse,
   getCourseById,
-  getStudentCourse,
+  getCourseMember,
   updateCourse,
   deleteCourse,
 };

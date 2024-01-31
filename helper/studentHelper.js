@@ -22,6 +22,23 @@ const getStudentById = async (id) => {
   return Promise.resolve(result);
 };
 
+// Many-to-many case
+const getStudentCourse = async (id) => {
+  const poolConnection = await db.ConnectionPool.getConnection();
+  const query = await poolConnection.query(
+    `SELECT course.*
+    FROM course
+    JOIN student_course ON course.id = student_course.course_id
+    JOIN student ON student_course.student_id = student.id
+    WHERE student.id = '${id}';`
+  );
+
+  await poolConnection.connection.release();
+  const result = db.constructQueryResult(query);
+
+  return Promise.resolve(result);
+};
+
 const addStudent = async (name, major) => {
   const poolConnection = await db.ConnectionPool.getConnection();
   await poolConnection.query(
@@ -55,6 +72,7 @@ const deleteStudent = async (id) => {
 module.exports = {
   getStudent,
   getStudentById,
+  getStudentCourse,
   addStudent,
   updateStudent,
   deleteStudent,
