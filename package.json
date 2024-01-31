@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "nodemon ./index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "lodash": "^4.17.21",
+    "nodemon": "^3.0.3",
+    "promise-mysql2": "^1.0.0"
+  }
+}
